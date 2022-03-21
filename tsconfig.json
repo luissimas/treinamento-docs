@@ -10,6 +10,8 @@
       "@controllers/*": ["./src/controllers/*"],
       "@routes/*": ["./src/routes/*"],
       "@routes": ["./src/routes"],
+      "@errors/*": ["./src/middlewares/error/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
 
     /* Interop Constraints */

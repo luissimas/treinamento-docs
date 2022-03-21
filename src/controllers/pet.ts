@@ -2,6 +2,7 @@ import { hash } from 'bcrypt'
 import { v4 as uuid } from 'uuid'
 import { NextFunction, Request, Response } from 'express'
 import { PetModel } from 'src/database/models/pet'
+import { EntityNotFound } from '@errors/errors'
 
 type PetData = {
   id: string
@@ -42,7 +43,7 @@ async function getById(req: Request, res: Response, next: NextFunction): Promise
     const pet = await PetModel.query().select().findById(id)
 
     if (!pet) {
-      return res.status(404).json({ Error: 'Pet not found' })
+      throw new EntityNotFound('Pet')
     }
 
     return res.status(200).json(pet)
@@ -59,7 +60,7 @@ async function update(req: Request, res: Response, next: NextFunction): Promise<
     const pet = await PetModel.query().select().findById(id)
 
     if (!pet) {
-      return res.status(404).json({ Error: 'Pet not found' })
+      throw new EntityNotFound('Pet')
     }
 
     await PetModel.query().findById(id).patch({ id_user, name, animal, age })
@@ -77,7 +78,7 @@ async function remove(req: Request, res: Response, next: NextFunction): Promise<
     const pet = await PetModel.query().select().findById(id)
 
     if (!pet) {
-      return res.status(404).json({ Error: 'Pet not found' })
+      throw new EntityNotFound('Pet')
     }
     await PetModel.query().deleteById(id)
 

@@ -2,6 +2,7 @@ import { hash } from 'bcrypt'
 import { v4 as uuid } from 'uuid'
 import { NextFunction, Request, Response } from 'express'
 import { UserModel } from 'src/database/models/user'
+import { EntityNotFound } from '@errors/errors'
 
 type UserData = {
   id: string
@@ -43,7 +44,7 @@ async function getById(req: Request, res: Response, next: NextFunction): Promise
     const user = await UserModel.query().select('id', 'name', 'age', 'email').findById(id).withGraphFetched('pets')
 
     if (!user) {
-      return res.status(404).json({ Error: 'User not found' })
+      throw new EntityNotFound('User')
     }
 
     return res.status(200).json(user)
@@ -60,7 +61,7 @@ async function update(req: Request, res: Response, next: NextFunction): Promise<
     const user = await UserModel.query().select().findById(id)
 
     if (!user) {
-      return res.status(404).json({ Error: 'User not found' })
+      throw new EntityNotFound('User')
     }
 
     const hashedPassword = password ? await hash(password, 12) : user.password
@@ -80,7 +81,7 @@ async function remove(req: Request, res: Response, next: NextFunction): Promise<
     const user = await UserModel.query().select().findById(id)
 
     if (!user) {
-      return res.status(404).json({ Error: 'User not found' })
+      throw new EntityNotFound('User')
     }
 
     await UserModel.query().deleteById(id)
