@@ -2,7 +2,7 @@ import { hash } from 'bcrypt'
 import { v4 as uuid } from 'uuid'
 import { NextFunction, Request, Response } from 'express'
 import { UserModel } from 'src/database/models/user'
-import { EntityNotFound } from '@errors/errors'
+import { EntityNotFound, UserAlreadyExists } from '@errors/errors'
 
 type UserData = {
   id: string
@@ -12,10 +12,16 @@ type UserData = {
   password: string
 }
 
-async function create(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function createController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { name, age, email, password }: UserData = req.body
 
   try {
+    const user = await UserModel.query().where({ email }).first()
+
+    if (user) {
+      throw new UserAlreadyExists('email', email)
+    }
+
     const id = uuid()
     const hashedPassword = await hash(password, 12)
 
@@ -27,7 +33,7 @@ async function create(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
-async function list(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function listController(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   try {
     const users = await UserModel.query().select('id', 'name', 'age', 'email').withGraphFetched('pets')
 
@@ -37,7 +43,7 @@ async function list(_req: Request, res: Response, next: NextFunction): Promise<R
   }
 }
 
-async function getById(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function getByIdController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id } = req.params
 
   try {
@@ -53,7 +59,7 @@ async function getById(req: Request, res: Response, next: NextFunction): Promise
   }
 }
 
-async function update(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function updateController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id } = req.params
   const { name, age, email, password }: UserData = req.body
 
@@ -74,7 +80,7 @@ async function update(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
-async function remove(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function deleteController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id } = req.params
 
   try {
@@ -92,4 +98,4 @@ async function remove(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
-export { create, list, getById, update, remove }
+export { createController, listController, getByIdController, updateController, deleteController }

@@ -12,7 +12,7 @@ type PetData = {
   age: number
 }
 
-async function create(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function createController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id_user, name, animal, age }: PetData = req.body
 
   try {
@@ -26,7 +26,7 @@ async function create(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
-async function list(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function listController(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   try {
     const pets = await PetModel.query().select()
 
@@ -36,7 +36,7 @@ async function list(_req: Request, res: Response, next: NextFunction): Promise<R
   }
 }
 
-async function getById(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function getByIdController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id } = req.params
 
   try {
@@ -52,7 +52,7 @@ async function getById(req: Request, res: Response, next: NextFunction): Promise
   }
 }
 
-async function update(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function updateController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id } = req.params
   const { id_user, name, animal, age }: PetData = req.body
 
@@ -71,7 +71,7 @@ async function update(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
-async function remove(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
+async function deleteController(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   const { id } = req.params
 
   try {
@@ -88,4 +88,4 @@ async function remove(req: Request, res: Response, next: NextFunction): Promise<
   }
 }
 
-export { create, list, getById, update, remove }
+export { createController, listController, getByIdController, updateController, deleteController }

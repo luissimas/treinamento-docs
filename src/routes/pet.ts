@@ -1,13 +1,21 @@
 import { Router } from 'express'
 
-import { create, list, getById, update, remove } from '@controllers/pet'
+import {
+  createController,
+  listController,
+  getByIdController,
+  updateController,
+  deleteController,
+} from '@controllers/pet'
+
+import { createValidation, deleteValidation, getByIdValidation, updateValidation } from '@middlewares/validation/pet'
 
 const router = Router()
 
-router.post('/', create)
-router.get('/', list)
-router.get('/:id', getById)
-router.patch('/:id', update)
-router.delete('/:id', remove)
+router.post('/', createValidation(), createController)
+router.get('/', listController)
+router.get('/:id', getByIdValidation(), getByIdController)
+router.patch('/:id', updateValidation(), updateController)
+router.delete('/:id', deleteValidation(), deleteController)
 
 export { router }
