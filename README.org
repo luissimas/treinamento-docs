@@ -1,0 +1,6 @@
+#+title: Treinamento documentação
+#+author: Luís Augusto Simas
+
+* O que é documentação?
+* Por que documentar uma API?
+* Alternativas de implementação
