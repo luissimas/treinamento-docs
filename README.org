@@ -1,6 +1,27 @@
-#+title: Treinamento documentação
+#+title:Treinamento documentação
 #+author: Luís Augusto Simas
 
 * O que é documentação?
+A documentação de uma API é uma coleção de recursos e documentos técnicos que fornece as informações necessárias para usar e consumir a API de maneira efetiva. Uma documentação pode assumir muitas formas, desde guias e exemplos de uso até uma descrição técnica detalhada de uso dos recursos fornecidos. Nesse treinamento o foco será nessa descrição detalhada dos recursos, chamada /API Reference/.
+
+#+caption: Exemplo de um API Reference
+#+attr_org: :width 1000
+[[file:assets/stripedocs.png]]
+
 * Por que documentar uma API?
-* Alternativas de implementação
+Os usuários da API devem saber quais recursos estão disponíveis e como consumi-los. Tecnicamente é possível consumir uma API não documentada, mas isso toma muito mais tempo dos usuários da API e dificulta a integração.
+
+Quando falamos em usuários da API, esses usuários geralmente são outros desenvolvedores que estão trabalhando em alguma aplicação que vai utilizar dos recursos fornecidos pela nossa API.
+
+* Implementação
+Documentar uma API consome tempo do desenvolvedor que a escreve, mas poupa tempo dos desenvolvedores que consomem a API. Dessa forma, é necessário aplicar métodos que facilitem o desenvolvimento da documentação, tornando-a um processo menos custoso para o desenvolvedor da API.
+
+Tendo isso em vista, ao desenvolver a especificação de uma API nós não vamos escrever toda a documentação do 0. Ao invés disso, vamos utilizar ferramentas que permitem a geração da documentação com base apenas nas informações essenciais sobre os recursos fornecidos e como eles podem ser consumidos.
+
+Há alguns formatos e especificações aplicados no desenvolvimento de documentação, mas a especificação mais popular é de longe a OpenAPI, que permite a descrição completa de APIs, desde endpoints e formatos de request/response até aspectos de segurança e autenticação. A principal razão para usar uma especificação desse tipo é para automatizar a geração da documentação final.
+
+** Swagger
+Além da especificação, é necessário alguma ferramenta para gerar e exibir a documentação. Uma opção muito popular é o Swagger, que permite a geração da documentação com base na especificação OpenAPI. Além da geração da documentação, o Swagger também fornece uma série de ferramentas adicionais que tornam o processo de documentar e acessar a documentação de uma API mais simples e eficiente.
+
+** JSDoc
+O formato JSDoc foi desenvolvido com o propósito de ser uma linguagem de marcação usada para anotar código JavaScript, permitindo a documentação de parâmetros de funções, tipos de retornos, strings de documentação etc. Esse formato pode ser estendido também para a documentação de APIs, permitindo que o desenvolvedor escreva a documentação no próprio código fonte, sem se preocupar com o processo de exportação, que é feito automaticamente.
