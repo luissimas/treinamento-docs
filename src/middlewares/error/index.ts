@@ -6,9 +6,9 @@ type StatusAssoc = {
 }
 
 const httpStatus: StatusAssoc = {
-  UserAlreadyExists: 400,
   EntityNotFound: 404,
   InvalidFieldError: 400,
+  UserAlreadyExists: 409,
 }
 
 export async function handler(error: BaseError, _req: Request, res: Response, _next: NextFunction): Promise<Response> {

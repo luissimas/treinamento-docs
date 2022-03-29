@@ -35,7 +35,12 @@ async function createController(req: Request, res: Response, next: NextFunction)
 
 async function listController(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   try {
-    const users = await UserModel.query().select('id', 'name', 'age', 'email').withGraphFetched('pets')
+    const users = await UserModel.query()
+      .select('id', 'name', 'age', 'email')
+      .withGraphFetched('pets')
+      .modifyGraph('pets', builder => {
+        builder.select('id', 'id_user', 'name', 'animal', 'age')
+      })
 
     return res.status(200).json(users)
   } catch (error) {
@@ -47,7 +52,13 @@ async function getByIdController(req: Request, res: Response, next: NextFunction
   const { id } = req.params
 
   try {
-    const user = await UserModel.query().select('id', 'name', 'age', 'email').findById(id).withGraphFetched('pets')
+    const user = await UserModel.query()
+      .select('id', 'name', 'age', 'email')
+      .findById(id)
+      .withGraphFetched('pets')
+      .modifyGraph('pets', builder => {
+        builder.select('id', 'id_user', 'name', 'animal', 'age')
+      })
 
     if (!user) {
       throw new EntityNotFound('User')

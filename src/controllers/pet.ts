@@ -28,7 +28,7 @@ async function createController(req: Request, res: Response, next: NextFunction)
 
 async function listController(_req: Request, res: Response, next: NextFunction): Promise<Response | void> {
   try {
-    const pets = await PetModel.query().select()
+    const pets = await PetModel.query().select('id', 'id_user', 'name', 'animal', 'age')
 
     return res.status(200).json(pets)
   } catch (error) {
