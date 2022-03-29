@@ -81,6 +81,12 @@ async function updateController(req: Request, res: Response, next: NextFunction)
       throw new EntityNotFound('User')
     }
 
+    const userByEmail = await UserModel.query().where({ email }).first()
+
+    if (userByEmail) {
+      throw new UserAlreadyExists('email', email)
+    }
+
     const hashedPassword = password ? await hash(password, 12) : user.password
 
     await UserModel.query().findById(id).patch({ id, name, age, email, password: hashedPassword })
