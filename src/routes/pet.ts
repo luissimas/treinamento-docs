@@ -18,4 +18,22 @@ router.get('/:id', getByIdValidation(), getByIdController)
 router.patch('/:id', updateValidation(), updateController)
 router.delete('/:id', deleteValidation(), deleteController)
 
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     Pet:
+ *       properties:
+ *         id:
+ *           type: string
+ *         id_user:
+ *           type: string
+ *         name:
+ *           type: string
+ *         animal:
+ *           type: string
+ *         age:
+ *           type: number
+ */
+
 export { router }
