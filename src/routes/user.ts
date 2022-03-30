@@ -67,7 +67,7 @@ router.post('/', createValidation(), createController)
  * /user:
  *   get:
  *     summary: Listagem de usuários
- *     description: Lista todos os usuários cadastrados no sistema
+ *     description: Lista todos os usuários cadastrados no sistema.
  *     tags:
  *       - Users
  *     responses:
@@ -78,14 +78,9 @@ router.post('/', createValidation(), createController)
  *            schema:
  *              type: array
  *              items:
- *                allOf:
- *                  - $ref: '#/components/schemas/User'
- *                  - type: object
- *                    properties:
- *                      pets:
- *                        type: array
- *                        items:
- *                          $ref: '#/components/schemas/Pet'
+ *                $ref: '#/components/schemas/User'
+ *      '500':
+ *        description: Erro interno no servidor.
  */
 router.get('/', listController)
 
@@ -94,17 +89,13 @@ router.get('/', listController)
  * /user/{id}:
  *   get:
  *     summary: Listagem de usuários por id
- *     description: Lista um usuário e seus pets dado seu `id`
+ *     description: Lista um usuário e seus pets dado seu `id`.
  *     tags:
  *       - Users
  *     parameters:
  *       - name: id
  *         in: path
  *     responses:
- *      '400':
- *        description: Erro na requisição.
- *      '404':
- *        description: Usuário não encontrado.
  *      '200':
  *        description: Usuário listado com sucesso.
  *        content:
@@ -112,14 +103,11 @@ router.get('/', listController)
  *            schema:
  *              type: array
  *              items:
- *                allOf:
- *                  - $ref: '#/components/schemas/User'
- *                  - type: object
- *                    properties:
- *                      pets:
- *                        type: array
- *                        items:
- *                          $ref: '#/components/schemas/Pet'
+ *                $ref: '#/components/schemas/User'
+ *      '400':
+ *        description: Erro na requisição.
+ *      '404':
+ *        description: Usuário não encontrado.
  */
 router.get('/:id', getByIdValidation(), getByIdController)
 
@@ -128,7 +116,7 @@ router.get('/:id', getByIdValidation(), getByIdController)
  * /user/{id}:
  *   patch:
  *     summary: Atualização de usuários
- *     description: Atualiza o cadastro de um usuário dado seu `id`
+ *     description: Atualiza o cadastro de um usuário dado seu `id`.
  *     tags:
  *       - Users
  *     parameters:
@@ -153,14 +141,14 @@ router.get('/:id', getByIdValidation(), getByIdController)
  *             age: 34
  *             password: jorge3847
  *     responses:
+ *      '204':
+ *        description: Usuário atualizado com sucesso.
  *      '400':
- *        description: Campos inválidos.
+ *        description: Erro na requisição.
  *      '404':
  *        description: Usuário não encontrado.
  *      '409':
  *        description: Já existe um usuário cadastrado com o e-mail informado.
- *      '204':
- *        description: Usuário atualizado com sucesso.
  */
 router.patch('/:id', updateValidation(), updateController)
 
@@ -169,19 +157,19 @@ router.patch('/:id', updateValidation(), updateController)
  * /user/{id}:
  *   delete:
  *     summary: Remoção de usuários
- *     description: Remove um usuário dado seu `id`
+ *     description: Remove um usuário dado seu `id`.
  *     tags:
  *       - Users
  *     parameters:
  *       - name: id
  *         in: path
  *     responses:
+ *      '204':
+ *        description: Usuário removido com sucesso.
  *      '400':
  *        description: Erro na requisição.
  *      '404':
  *        description: Usuário não encontrado.
- *      '204':
- *        description: Usuário removido com sucesso.
  */
 router.delete('/:id', deleteValidation(), deleteController)
 
@@ -199,6 +187,10 @@ router.delete('/:id', deleteValidation(), deleteController)
  *           type: string
  *         age:
  *           type: number
+ *         pets:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/Pet'
  */
 
 export { router }
