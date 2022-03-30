@@ -18,7 +18,7 @@ async function createController(req: Request, res: Response, next: NextFunction)
   try {
     const id = uuid()
 
-    await PetModel.query().insert({ id_user, name, animal, age })
+    await PetModel.query().insert({ id, id_user, name, animal, age })
 
     return res.status(201).json({ id })
   } catch (error) {
