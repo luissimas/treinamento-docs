@@ -99,9 +99,7 @@ router.get('/', listController)
  *        content:
  *          application/json:
  *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/Pet'
+ *              $ref: '#/components/schemas/Pet'
  *      '400':
  *        description: Erro na requisição.
  *      '404':

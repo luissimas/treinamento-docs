@@ -101,13 +101,13 @@ router.get('/', listController)
  *        content:
  *          application/json:
  *            schema:
- *              type: array
- *              items:
- *                $ref: '#/components/schemas/User'
+ *              $ref: '#/components/schemas/User'
  *      '400':
  *        description: Erro na requisição.
  *      '404':
  *        description: Usuário não encontrado.
+ *      '500':
+ *        description: Erro interno no servidor.
  */
 router.get('/:id', getByIdValidation(), getByIdController)
 
@@ -149,6 +149,8 @@ router.get('/:id', getByIdValidation(), getByIdController)
  *        description: Usuário não encontrado.
  *      '409':
  *        description: Já existe um usuário cadastrado com o e-mail informado.
+ *      '500':
+ *        description: Erro interno no servidor.
  */
 router.patch('/:id', updateValidation(), updateController)
 
@@ -170,6 +172,8 @@ router.patch('/:id', updateValidation(), updateController)
  *        description: Erro na requisição.
  *      '404':
  *        description: Usuário não encontrado.
+ *      '500':
+ *        description: Erro interno no servidor.
  */
 router.delete('/:id', deleteValidation(), deleteController)
 
